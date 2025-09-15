@@ -30,7 +30,7 @@ export function MainLayout({ children }: LayoutProps) {
     return (
         <div className="min-h-screen bg-gray-50">
             {/* Navigation Header */}
-            <header className="bg-white shadow-sm border-b sticky top-0 z-10">
+            <header className="bg-cyan-200 shadow-sm border-b sticky top-0 z-10">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex items-center justify-between h-16">
                         <div className="flex items-center space-x-8">

@@ -1,10 +1,20 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { EmailService } from '@/lib/email-service';
 import { GoogleCalendarService } from '@/lib/google-calendar';
 import clientPromise from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { getServerSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
 import { authOptions } from '../auth/[...nextauth]/route';
+
+// Define a type for our user documents to ensure type safety
+interface UserDocument {
+    _id: ObjectId;
+    name: string;
+    email: string;
+
+}
 
 // GET handler to fetch bookings for the current user
 export async function GET(request: NextRequest) {
@@ -19,10 +29,8 @@ export async function GET(request: NextRequest) {
         const userId = new ObjectId(session.user.id);
         const userRole = session.user.role;
 
-        // Build the query based on the user's role
         const query = userRole === 'seller' ? { sellerId: userId } : { buyerId: userId };
 
-        // Find all bookings and join with the other user's data
         const bookings = await db.collection("bookings").aggregate([
             { $match: query },
             {
@@ -35,7 +43,7 @@ export async function GET(request: NextRequest) {
             },
             { $unwind: "$otherUser" },
             {
-                $project: { // Only return necessary fields
+                $project: {
                     startTime: 1,
                     endTime: 1,
                     title: 1,
@@ -46,7 +54,7 @@ export async function GET(request: NextRequest) {
                     "otherUser.image": 1,
                 }
             },
-            { $sort: { startTime: -1 } } // Sort by most recent first
+            { $sort: { startTime: -1 } }
         ]).toArray();
 
         return NextResponse.json(bookings);
@@ -56,7 +64,8 @@ export async function GET(request: NextRequest) {
     }
 }
 
-// POST handler to create a new booking (already built)
+
+// POST handler to create a new booking
 export async function POST(request: NextRequest) {
     try {
         const session = await getServerSession(authOptions);
@@ -74,8 +83,11 @@ export async function POST(request: NextRequest) {
         const client = await clientPromise;
         const db = client.db(process.env.DATABASE_NAME);
 
-        const seller = await db.collection("users").findOne({ _id: new ObjectId(sellerId) });
-        const buyer = await db.collection("users").findOne({ _id: new ObjectId(session.user.id) });
+        // --- THIS IS THE FIX ---
+        // Use the generic parameter to tell TypeScript what kind of document we are fetching
+        const seller = await db.collection<UserDocument>("users").findOne({ _id: new ObjectId(sellerId) });
+        const buyer = await db.collection<UserDocument>("users").findOne({ _id: new ObjectId(session.user.id) });
+        // ----------------------
 
         if (!seller || !buyer) {
             return NextResponse.json({ error: 'Invalid user or seller' }, { status: 404 });
@@ -109,13 +121,17 @@ export async function POST(request: NextRequest) {
             description,
             googleMeetLink: calendarEvent.hangoutLink,
             calendarEventId: calendarEvent.id,
-            status: 'confirmed',
+            status: 'confirmed' as const,
             remindersSent: {},
             createdAt: new Date(),
             updatedAt: new Date(),
         };
 
         const result = await db.collection("bookings").insertOne(newBooking);
+
+        const emailService = new EmailService();
+        // Now TypeScript knows that `seller` and `buyer` have .name and .email properties
+        await emailService.sendBookingConfirmation(newBooking, seller, buyer);
 
         return NextResponse.json({ success: true, bookingId: result.insertedId, event: calendarEvent });
 
