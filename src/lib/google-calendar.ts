@@ -1,5 +1,4 @@
-
-import { google } from 'googleapis';
+import { calendar_v3, google } from 'googleapis'; // Import calendar_v3 for strong types
 import { ObjectId } from 'mongodb';
 import clientPromise from './mongodb';
 
@@ -24,9 +23,6 @@ export class GoogleCalendarService {
             throw new Error("User's Google account not linked or refresh token is missing.");
         }
 
-        // The refresh token from NextAuth is already a string and doesn't need decryption
-        // unless you explicitly encrypted it upon saving. For simplicity, we assume it's not encrypted yet.
-        // If you plan to encrypt, you'd save an encrypted version and decrypt here.
         this.oauth2Client.setCredentials({
             refresh_token: account.refresh_token,
         });
@@ -48,5 +44,60 @@ export class GoogleCalendarService {
         return response.data.calendars?.primary?.busy || [];
     }
 
-    // Note: createEvent logic will be used later when a buyer books an appointment
+    // --- NEW METHOD ADDED BELOW ---
+
+    /**
+     * Creates a new event in the user's primary Google Calendar.
+     * @param eventDetails Details of the event to be created.
+     * @returns The data of the created calendar event.
+     */
+    async createEvent(eventDetails: {
+        title: string;
+        description?: string;
+        startTime: string; // ISO 8601 format
+        endTime: string;   // ISO 8601 format
+        timezone: string;
+        attendees: { email: string }[];
+    }) {
+        const calendar = google.calendar({ version: 'v3', auth: this.oauth2Client });
+
+        // Construct the event object with strong types from the library
+        const event: calendar_v3.Params$Resource$Events$Insert["requestBody"] = {
+            summary: eventDetails.title,
+            description: eventDetails.description,
+            start: {
+                dateTime: eventDetails.startTime,
+                timeZone: eventDetails.timezone,
+            },
+            end: {
+                dateTime: eventDetails.endTime,
+                timeZone: eventDetails.timezone,
+            },
+            attendees: eventDetails.attendees,
+            // This block is crucial for generating a Google Meet link
+            conferenceData: {
+                createRequest: {
+                    requestId: `meet-${Date.now()}`, // A unique ID for the request
+                    conferenceSolutionKey: { type: 'hangoutsMeet' },
+                },
+            },
+            reminders: {
+                useDefault: false,
+                overrides: [
+                    { method: 'email', minutes: 60 },
+                    { method: 'popup', minutes: 10 },
+                ],
+            },
+        };
+
+        const response = await calendar.events.insert({
+            calendarId: 'primary',
+            requestBody: event,
+            conferenceDataVersion: 1, // Required to get a Meet link
+            sendUpdates: 'all',       // Ensures guests receive an invitation email
+        });
+
+        return response.data;
+    }
 }
+

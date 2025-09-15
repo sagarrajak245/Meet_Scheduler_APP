@@ -6,7 +6,6 @@ import { fromZonedTime, toZonedTime } from 'date-fns-tz';
 import { ObjectId } from 'mongodb';
 import { NextRequest, NextResponse } from 'next/server';
 
-// The parameter name here now matches the folder name `[sellerId]`
 export async function GET(request: NextRequest, { params }: { params: Promise<{ sellerId: string }> }) {
     try {
         // Await params before destructuring
