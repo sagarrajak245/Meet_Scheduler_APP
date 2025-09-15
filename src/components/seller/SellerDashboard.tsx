@@ -11,7 +11,7 @@ export function SellerDashboard() {
         <div className="container mx-auto p-4 md:p-6">
             <div className="mb-8">
                 <h1 className="text-3xl font-bold">Seller Dashboard</h1>
-                <p className="text-muted-foreground">Welcome back, {session?.user?.name}</p>
+                <p className=" text-slate-800">Welcome back, {session?.user?.name}</p>
             </div>
 
             <Tabs defaultValue="settings" className="w-full">

@@ -24,7 +24,7 @@ interface UserPreferences {
 }
 
 export function AvailabilityEditor() {
-    const { data: session, update } = useSession(); // Get the update function from useSession
+    const { data: session, update } = useSession();
     const [loading, setLoading] = useState(false);
     const [preferences, setPreferences] = useState<UserPreferences>({
         workingHours: {
