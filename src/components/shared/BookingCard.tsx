@@ -24,10 +24,14 @@ interface Booking {
 
 interface BookingCardProps {
     booking: Booking;
+    // Add a new optional prop to receive the cancellation handler function
+    onCancel?: (bookingId: string) => void;
 }
 
-export function BookingCard({ booking }: BookingCardProps) {
+export function BookingCard({ booking, onCancel }: BookingCardProps) {
     const isPast = new Date(booking.startTime) < new Date();
+    // A booking is "upcoming" if it's not in the past and is still confirmed
+    const isUpcoming = !isPast && booking.status === 'confirmed';
 
     return (
         <Card>
@@ -36,7 +40,10 @@ export function BookingCard({ booking }: BookingCardProps) {
                     <CardTitle>{booking.title}</CardTitle>
                     <CardDescription>with {booking.otherUser.name}</CardDescription>
                 </div>
-                <Badge variant={isPast ? "secondary" : "default"}>{booking.status}</Badge>
+                {/* Updated badge logic to show different colors for different statuses */}
+                <Badge variant={booking.status !== 'confirmed' ? 'destructive' : isPast ? 'secondary' : 'default'}>
+                    {booking.status}
+                </Badge>
             </CardHeader>
             <CardContent className="space-y-3">
                 <div className="flex items-center text-sm text-muted-foreground">
@@ -63,7 +70,23 @@ export function BookingCard({ booking }: BookingCardProps) {
                         </a>
                     </Button>
                 )}
+
+
+                {/* Conditionally render the cancel button if the booking is upcoming and the onCancel function is provided */}
+                {isUpcoming && onCancel && (
+                    <div className="pt-3 border-t mt-3">
+                        <Button
+                            variant="destructive"
+                            size="sm"
+                            className="w-full"
+                            onClick={() => onCancel(booking._id)}
+                        >
+                            Cancel Appointment
+                        </Button>
+                    </div>
+                )}
             </CardContent>
         </Card>
     );
 }
+

@@ -1,19 +1,19 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { AnalyticsService } from '@/lib/analytics-service'; // <-- IMPORT ANALYTICS
 import { EmailService } from '@/lib/email-service';
 import { GoogleCalendarService } from '@/lib/google-calendar';
-import clientPromise from '@/lib/mongodb';
+import clientPromise from '@/lib/mongodb'; // Corrected import
 import { ObjectId } from 'mongodb';
 import { getServerSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
 import { authOptions } from '../auth/[...nextauth]/route';
 
-// Define a type for our user documents to ensure type safety
+// Define a type for our user documents to ensure type safety  
 interface UserDocument {
     _id: ObjectId;
     name: string;
     email: string;
-
 }
 
 // GET handler to fetch bookings for the current user
@@ -83,11 +83,8 @@ export async function POST(request: NextRequest) {
         const client = await clientPromise;
         const db = client.db(process.env.DATABASE_NAME);
 
-        // --- THIS IS THE FIX ---
-        // Use the generic parameter to tell TypeScript what kind of document we are fetching
         const seller = await db.collection<UserDocument>("users").findOne({ _id: new ObjectId(sellerId) });
         const buyer = await db.collection<UserDocument>("users").findOne({ _id: new ObjectId(session.user.id) });
-        // ----------------------
 
         if (!seller || !buyer) {
             return NextResponse.json({ error: 'Invalid user or seller' }, { status: 404 });
@@ -130,8 +127,15 @@ export async function POST(request: NextRequest) {
         const result = await db.collection("bookings").insertOne(newBooking);
 
         const emailService = new EmailService();
-        // Now TypeScript knows that `seller` and `buyer` have .name and .email properties
         await emailService.sendBookingConfirmation(newBooking, seller, buyer);
+
+        // --- THIS IS THE FINAL ADDITION ---
+        // After everything is successful, track the event.
+        const analyticsService = new AnalyticsService();
+        await analyticsService.trackEvent(sellerId, 'booking_created', {
+            duration: (newBooking.endTime.getTime() - newBooking.startTime.getTime()) / (1000 * 60)
+        });
+        // ------------------------------------
 
         return NextResponse.json({ success: true, bookingId: result.insertedId, event: calendarEvent });
 

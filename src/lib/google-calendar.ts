@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { calendar_v3, google } from 'googleapis'; // Import calendar_v3 for strong types
 import { ObjectId } from 'mongodb';
 import clientPromise from './mongodb';
@@ -98,6 +99,36 @@ export class GoogleCalendarService {
         });
 
         return response.data;
+    }
+
+
+    // --- THIS IS THE NEW METHOD ---
+    /**
+     * Cancels an event in the user's primary Google Calendar.
+     * @param eventId The ID of the Google Calendar event to cancel.
+     */
+    async cancelEvent(eventId: string) {
+        const calendar = google.calendar({ version: 'v3', auth: this.oauth2Client });
+
+        try {
+            await calendar.events.delete({
+                calendarId: 'primary',
+                eventId: eventId,
+                sendUpdates: 'all', // This is crucial to notify guests of the cancellation
+            });
+            console.log(`Successfully cancelled event: ${eventId}`);
+            return true;
+        } catch (error: any) {
+            // It's common for an event to have already been deleted by the user in their calendar.
+            // Google returns a 410 "Gone" error in this case, which we can safely ignore.
+            if (error.code === 410) {
+                console.log(`Event ${eventId} was already gone. Proceeding.`);
+                return true;
+            }
+            // For other errors, we should log them.
+            console.error(`Failed to cancel event ${eventId}:`, error);
+            throw new Error('Failed to update Google Calendar event.');
+        }
     }
 }
 
