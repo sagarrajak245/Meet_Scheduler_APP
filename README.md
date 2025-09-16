@@ -18,7 +18,7 @@
 
 ---
 
-## [Live Demo:](https://meetschedulerapp.vercel.app/)
+## [Live Demo:](https://meet-scheduler-app.vercel.app/)
 
 # 📸 Application Screenshots
 
