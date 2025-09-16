@@ -45,6 +45,106 @@
 
 ---
 
+How to Use the Smart Scheduler App
+This guide will walk you through the two primary roles in the application: being a Seller (who offers appointments) and a Buyer (who books them).
+
+Important Note for New Users: This application is currently in a secure "testing mode" as required by Google. To sign up, your Google account's email address must be added to the approved list of testers by the app administrator.
+
+Part 1: The Seller's Journey (Setting Up Your Business)
+This is the flow for a service provider who wants to make their time available for others to book.
+
+Step 1: Sign Up and Choose Your Role
+Navigate to the application's homepage.
+
+Click "Sign in with Google" and complete the authentication process with your Google account.
+
+On your first login, you will be presented with the "One Last Step!" screen. Select "I'm a Seller" and click "Continue".
+
+You will be automatically redirected to your personal Seller Dashboard.
+
+Step 2: Configure Your Availability
+This is the most important step for a seller.
+
+On your Seller Dashboard, click on the "Settings" tab.
+
+In the "Working Hours" section, set the Start Time and End Time you are generally available for bookings.
+
+Select the Working Days you want to offer appointments.
+
+Set a Buffer Time (in minutes) to automatically create a break between your scheduled meetings.
+
+Click "Save Preferences". You will see a success notification.
+
+Step 3: Let Your Calendar Do the Work
+Your availability is now live! The system will automatically cross-reference your saved preferences with your actual Google Calendar.
+
+If you have a personal event like "Lunch with a friend" or a "Doctor's Appointment" in your Google Calendar, the system will see that you are busy and will not offer that time slot to buyers.
+
+Step 4: Track Your Success
+After you start receiving bookings, you can:
+
+View your Upcoming Bookings on the main dashboard tab.
+
+Click the "Analytics" tab to see charts of your booking trends and most popular meeting times.
+
+Part 2: The Buyer's Journey (Booking an Appointment)
+This is the flow for a client who wants to book a meeting with a service provider.
+
+Step 1: Sign Up and Choose Your Role
+Navigate to the application's homepage and sign in with your Google Account.
+
+On the role selection screen, choose "I'm a Buyer" and click "Continue".
+
+You will be redirected to the Buyer Dashboard.
+
+Step 2: Find a Seller
+On the Buyer Dashboard, you will see a list of all available sellers.
+
+You can use the search bar to find a specific person by name.
+
+Once you find the seller you want to book with, click the "View Availability" button on their card.
+
+Step 3: Select the Perfect Time
+You will be taken to the seller's booking page.
+
+Use the calendar on the left to select a date.
+
+The available time slots for that day will appear on the right. These times are guaranteed to be free, as the system has already checked the seller's live Google Calendar.
+
+Click on a time slot that works for you.
+
+Step 4: Confirm Your Appointment
+Once you select a time, the "Confirm Your Details" form will appear.
+
+Enter a title for the meeting (e.g., "Marketing Consultation").
+
+Click the "Confirm & Book Appointment" button.
+
+Part 3: Managing Your Appointments (For Everyone)
+After an appointment is booked, both users have full visibility and control.
+
+Step 1: Check Your Email & Calendar
+Immediately after booking, both the Buyer and the Seller will receive a confirmation email with the meeting details.
+
+The event is also automatically added to both users' Google Calendars, complete with a Google Meet link for the video call.
+
+Step 2: View All Your Appointments
+At any time, either user can click the "My Appointments" link in the main navigation header.
+
+This page shows a complete list of all upcoming and past meetings.
+
+Step 3: Cancel an Appointment
+On the "My Appointments" page, find an upcoming meeting you need to cancel.
+
+Click the red "Cancel Appointment" button.
+
+Confirm your choice.
+
+The event will be removed from both users' Google Calendars, and a cancellation notification email will be sent to both parties.
+
+
+
+
 ## ✨ Core Features
 
 ### 🔐 **Secure Authentication System**
