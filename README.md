@@ -18,34 +18,28 @@
 
 ---
 
-## 📸 Application Screenshots
+# 📸 Application Screenshots
 
-<div align="center">
-  <table>
-    <tr>
-      <td align="center">
-        <img src="./screenshots/seller-dashboard.png" width="400" alt="Seller Dashboard" />
-        <br /><strong>Seller Analytics Dashboard</strong>
-      </td>
-      <td align="center">
-        <img src="./screenshots/buyer-dashboard.png" width="400" alt="Buyer Dashboard" />
-        <br /><strong>Buyer Seller Browser</strong>
-      </td>
-    </tr>
-    <tr>
-      <td align="center">
-        <img src="./screenshots/booking-page.png" width="400" alt="Booking Page" />
-        <br /><strong>Interactive Booking Interface</strong>
-      </td>
-      <td align="center">
-        <img src="https://github.com/user-attachments/assets/d2b4938b-d404-48d0-a009-94e15a1dde34" 
- width="400" alt="My Appointments" />
-        <br /><strong>Appointments Management Buyer</strong>
-      </td>
-      
-    </tr>
-  </table>
-</div>
+## LandingPage:
+<img width="1731" height="868" alt="image" src="https://github.com/user-attachments/assets/6d0032c5-1848-41c3-8acd-1a21ffcbfecd" />
+
+## Buyer Booking Dashboard :
+<img width="1533" height="769" alt="image" src="https://github.com/user-attachments/assets/53b2490b-f371-4afe-8bd9-bb65051ef433" />
+
+## Buyer Appointment Dashboard :
+<img width="1583" height="828" alt="image" src="https://github.com/user-attachments/assets/95acd7fd-7b5d-4469-b8ba-cf2f44d6c0ef" />
+
+## Avialable seller :
+<img width="1337" height="697" alt="image" src="https://github.com/user-attachments/assets/e19512eb-7131-49e0-bd02-5a4049980ceb" />
+
+## Seller  Dashboard :
+<img width="1761" height="863" alt="image" src="https://github.com/user-attachments/assets/ea385006-acc8-4093-9cd1-97d91a41c1b1" />
+
+## Seller Analytics Dashboard :
+<img width="1511" height="872" alt="image" src="https://github.com/user-attachments/assets/df7d243a-bff6-447f-8748-d390c99a89a9" />
+
+## seller settings :
+<img width="1455" height="870" alt="image" src="https://github.com/user-attachments/assets/152b016f-e856-44e6-96ec-f50ee0c4ec4a" />
 
 ---
 
