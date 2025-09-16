@@ -43,7 +43,7 @@ export function AppointmentsList() {
         fetchBookings();
     }, []);
 
-    // --- THIS IS THE NEW HANDLER ---
+
     const handleCancelBooking = async (bookingId: string) => {
         // A simple confirmation dialog for a better user experience
         if (!window.confirm("Are you sure you want to cancel this appointment? This action cannot be undone.")) {

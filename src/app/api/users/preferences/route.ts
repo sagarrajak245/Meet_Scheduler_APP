@@ -23,8 +23,10 @@ export async function PUT(request: Request) {
         );
 
         if (result.modifiedCount === 0 && result.upsertedCount === 0) {
+
             // This might happen if the user document doesn't exist, which is unlikely but possible
             return NextResponse.json({ error: "User not found or preferences not updated" }, { status: 404 });
+
         }
 
         return NextResponse.json({ message: "Preferences updated successfully" }, { status: 200 });

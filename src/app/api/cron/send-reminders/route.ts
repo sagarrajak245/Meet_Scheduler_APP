@@ -62,8 +62,6 @@ export async function GET(request: NextRequest) {
             ]).toArray();
 
             for (const booking of bookingsToRemind) {
-                // --- THIS IS THE FIX ---
-                // Create a new object that conforms to the expected type by converting the ObjectId to a string.
                 const bookingForEmail = {
                     ...booking,
                     _id: booking._id.toString(),
