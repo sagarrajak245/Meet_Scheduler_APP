@@ -18,6 +18,8 @@
 
 ---
 
+## [Live Demo:](https://meetschedulerapp.vercel.app/)
+
 # 📸 Application Screenshots
 
 ## LandingPage:
