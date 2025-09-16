@@ -8,7 +8,7 @@
   <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS" />
   <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel" />
 </div>
-
+  
 <br />
 
 <div align="center">
@@ -85,7 +85,7 @@ The core scheduling system intelligently calculates availability by:
 ### 📧 **Professional Email Notification System**
 - **Instant Confirmations**: HTML-formatted emails sent immediately upon booking
 - **Cancellation Alerts**: Automatic notifications when appointments are cancelled
-- **Smart Reminders**: Automated emails at 60 and 30 minutes before appointments
+- **Smart Reminders**: Automated emails at 60 and 30 minutes before appointments (currently vercel.json file removed Due to free tier Violation)
 - **Professional Templates**: Branded, responsive email designs
 
 ### 📊 **Comprehensive Seller Analytics**
