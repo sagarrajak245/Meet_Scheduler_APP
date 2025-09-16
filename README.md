@@ -38,9 +38,11 @@
         <br /><strong>Interactive Booking Interface</strong>
       </td>
       <td align="center">
-        <img src="./screenshots/appointments.png" width="400" alt="My Appointments" />
-        <br /><strong>Appointments Management</strong>
+        <img src="https://github.com/user-attachments/assets/d2b4938b-d404-48d0-a009-94e15a1dde34" 
+ width="400" alt="My Appointments" />
+        <br /><strong>Appointments Management Buyer</strong>
       </td>
+      
     </tr>
   </table>
 </div>
