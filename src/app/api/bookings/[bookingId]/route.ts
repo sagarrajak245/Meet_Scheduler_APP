@@ -1,11 +1,11 @@
 import { AnalyticsService } from '@/lib/analytics-service';
+import { authOptions } from '@/lib/auth';
 import { EmailService } from '@/lib/email-service';
 import { GoogleCalendarService } from '@/lib/google-calendar';
 import clientPromise from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import { getServerSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
-import { authOptions } from '../../auth/[...nextauth]/route';
 
 // --- THIS IS THE FIX ---
 // 1. Define the shape of the documents we're fetching for type safety
@@ -28,14 +28,16 @@ interface UserDocument {
 // ----------------------
 
 // This is the DELETE handler for cancelling a booking
-export async function DELETE(request: NextRequest, { params }: { params: { bookingId: string } }) {
+export async function DELETE(request: NextRequest, context: { params: Promise<{ bookingId: string }> }) {
     const session = await getServerSession(authOptions);
     if (!session || !session.user) {
         return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
     }
 
     try {
+        const params = await context.params; // Await the params
         const { bookingId } = params;
+
         const client = await clientPromise;
         const db = client.db(process.env.DATABASE_NAME);
         const bookingsCollection = db.collection<BookingDocument>('bookings'); // 2. Apply the type here
@@ -77,10 +79,8 @@ export async function DELETE(request: NextRequest, { params }: { params: { booki
         await analyticsService.trackEvent(booking.sellerId.toString(), 'booking_cancelled');
 
         return NextResponse.json({ success: true, message: 'Booking successfully cancelled.' });
-
     } catch (error) {
         console.error('Error cancelling booking:', error);
         return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
     }
-}
-
+} 

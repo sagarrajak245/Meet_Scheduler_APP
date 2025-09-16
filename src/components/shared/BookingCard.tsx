@@ -74,7 +74,7 @@ export function BookingCard({ booking, onCancel }: BookingCardProps) {
 
                 {/* Conditionally render the cancel button if the booking is upcoming and the onCancel function is provided */}
                 {isUpcoming && onCancel && (
-                    <div className="pt-3 border-t mt-3">
+                    <div className="pt-3 border-t mt-3 text-pink-400">
                         <Button
                             variant="destructive"
                             size="sm"

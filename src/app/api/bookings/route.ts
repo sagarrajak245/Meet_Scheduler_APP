@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AnalyticsService } from '@/lib/analytics-service'; // <-- IMPORT ANALYTICS
+import { AnalyticsService } from '@/lib/analytics-service'; // 
+import { authOptions } from '@/lib/auth';
 import { EmailService } from '@/lib/email-service';
 import { GoogleCalendarService } from '@/lib/google-calendar';
 import clientPromise from '@/lib/mongodb'; // Corrected import
 import { ObjectId } from 'mongodb';
 import { getServerSession } from 'next-auth';
 import { NextRequest, NextResponse } from 'next/server';
-import { authOptions } from '../auth/[...nextauth]/route';
 
 // Define a type for our user documents to ensure type safety  
 interface UserDocument {
@@ -129,8 +129,6 @@ export async function POST(request: NextRequest) {
         const emailService = new EmailService();
         await emailService.sendBookingConfirmation(newBooking, seller, buyer);
 
-        // --- THIS IS THE FINAL ADDITION ---
-        // After everything is successful, track the event.
         const analyticsService = new AnalyticsService();
         await analyticsService.trackEvent(sellerId, 'booking_created', {
             duration: (newBooking.endTime.getTime() - newBooking.startTime.getTime()) / (1000 * 60)

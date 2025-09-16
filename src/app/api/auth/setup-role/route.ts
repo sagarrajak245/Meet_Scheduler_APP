@@ -1,7 +1,7 @@
+import { authOptions } from "@/lib/auth";
 import clientPromise from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "../[...nextauth]/route";
 
 export async function POST(request: Request) {
     // 1. Authenticate the user
