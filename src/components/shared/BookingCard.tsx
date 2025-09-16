@@ -24,13 +24,11 @@ interface Booking {
 
 interface BookingCardProps {
     booking: Booking;
-    // Add a new optional prop to receive the cancellation handler function
     onCancel?: (bookingId: string) => void;
 }
 
 export function BookingCard({ booking, onCancel }: BookingCardProps) {
     const isPast = new Date(booking.startTime) < new Date();
-    // A booking is "upcoming" if it's not in the past and is still confirmed
     const isUpcoming = !isPast && booking.status === 'confirmed';
 
     return (
@@ -40,7 +38,6 @@ export function BookingCard({ booking, onCancel }: BookingCardProps) {
                     <CardTitle>{booking.title}</CardTitle>
                     <CardDescription>with {booking.otherUser.name}</CardDescription>
                 </div>
-                {/* Updated badge logic to show different colors for different statuses */}
                 <Badge variant={booking.status !== 'confirmed' ? 'destructive' : isPast ? 'secondary' : 'default'}>
                     {booking.status}
                 </Badge>
@@ -62,7 +59,10 @@ export function BookingCard({ booking, onCancel }: BookingCardProps) {
                     </Avatar>
                     <span>{booking.otherUser.name} ({booking.otherUser.email})</span>
                 </div>
-                {booking.googleMeetLink && (
+
+                {/* --- THIS IS THE FIX --- */}
+                {/* Only show the "Join" button if the meeting is confirmed */}
+                {booking.googleMeetLink && booking.status === 'confirmed' && (
                     <Button asChild variant="outline" className="w-full text-slate-800">
                         <a href={booking.googleMeetLink} target="_blank" rel="noopener noreferrer">
                             <Video className="mr-2 h-4 w-4 text-cyan-500" />
@@ -71,8 +71,6 @@ export function BookingCard({ booking, onCancel }: BookingCardProps) {
                     </Button>
                 )}
 
-
-                {/* Conditionally render the cancel button if the booking is upcoming and the onCancel function is provided */}
                 {isUpcoming && onCancel && (
                     <div className="pt-3 border-t mt-3 text-pink-400">
                         <Button
