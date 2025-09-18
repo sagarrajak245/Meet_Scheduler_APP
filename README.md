@@ -326,6 +326,35 @@ graph TB
 
 ## 🚀 Quick Start Guide
 
+Required Environment Variables
+Here are the keys you'll need in your .env.local file for both local development and in your Vercel project settings for production.
+
+MONGODB_URI: Your full MongoDB connection string. This is used in src/lib/mongodb.ts to connect to your database.
+
+DATABASE_NAME: The name of the database you're using within your MongoDB cluster (e.g., scheduler_db).
+
+GOOGLE_CLIENT_ID: The client ID for your Google Cloud OAuth 2.0 application, which is necessary for Google sign-in and Calendar API access.
+
+GOOGLE_CLIENT_SECRET: The client secret for your Google Cloud OAuth 2.0 application.
+
+NEXTAUTH_SECRET: A randomly generated string used by NextAuth.js to encrypt session information and JSON Web Tokens (JWTs).
+
+NEXTAUTH_URL: The canonical URL of your application.
+
+For local development, this should be http://localhost:3000.
+
+For your Vercel deployment, this must be https://meet-scheduler-app.vercel.app.
+
+RESEND_API_KEY: Your API key from the Resend email service, used for sending booking confirmations and reminders.
+
+FROM_EMAIL: The email address that your application will use to send emails from (e.g., onboarding@resend.dev).
+
+ENCRYPTION_KEY: A 32-character key used for encrypting and decrypting sensitive information.
+
+CRON_SECRET: A secret key to secure your cron job endpoint on Vercel, preventing unauthorized access.
+
+
+
 ### **Prerequisites**
 - Node.js 18+ 
 - MongoDB Atlas account
